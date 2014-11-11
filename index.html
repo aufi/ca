@@ -17,11 +17,11 @@
 		            <span class="icon-bar"></span>
 		            <span class="icon-bar"></span>
 		          </button>
-		          <a class="navbar-brand" href="#/">{{execute-js 'window.ca_config.company_name'}} Company Auctions</a>
+		          <a class="navbar-brand" href="#/">{{get-config 'company_name'}} Company Auctions</a>
 		        </div>
 		        <div id="navbar" class="navbar-collapse collapse">
 		          <ul class="nav navbar-nav">
-                            <li>{{#link-to 'auctions'}}Auctions{{/link-to}}</li>
+                            <li>{{#link-to 'index'}}Auctions{{/link-to}}</li>
 		          </ul>
 		        </div><!--/.nav-collapse -->
 		      </div>
@@ -33,17 +33,16 @@
   </script>
 
   <script type="text/x-handlebars" id="index">
-    {{#each item in model}}
-      {{item}}<br>
-    {{/each}}
-  </script>
-
-  <script type="text/x-handlebars" id="auctions">
 	{{#each}}	
 	<div>
 	  <h3>{{#link-to 'auction' this}}{{name}}{{/link-to}}</h3>
 	  <p>{{description}}</p>
-	  <p>{{price}} {{execute-js 'window.ca_config.currency'}}</p>
+	  <p>
+            {{price}} {{get-config 'currency'}}
+            {{#each bid in bids}}
+                <span class="label label-primary">{{bid.username}}</span>
+            {{/each}}
+          </p>
 	</div>
 	{{/each}}
   </script>
@@ -51,18 +50,23 @@
   <script type="text/x-handlebars" id="auction">
 	  <h1>{{name}}</h1>
 	  <p>{{description}}</p>
-	  <p>Actual price: {{price}} {{execute-js 'window.ca_config.currency'}}</p>
+	  <p>Actual price: {{price}} {{get-config 'currency'}}</p>
 		<ul>Bids:
-		<li></li>
+                {{#each bid in bids}}
+		<li>
+                  <strong>{{bid.price}}</strong>
+                  {{bid.username}}</li>
+                {{/each}}
 		</ul>
 		<p>{{#link-to 'auction_edit' this}}Edit{{/link-to}}</p>
+           {{#link-to 'index' classNames='btn btn-default'}}&laquo; See all auctions{{/link-to}}
   </script>
 
   <script type="text/x-handlebars" id="auction_edit">
 	  <h1>Edit auction {{name}}</h1>
 		<p>{{input type="text" value=name}}</p>
 	  <p>{{textarea value=description}}</p>
-	  <p>Actual price {{input type="text" value=price}} {{execute-js 'window.ca_config.currency'}}</p>
+	  <p>Actual price {{input type="text" value=price}} {{get-config 'currency'}}</p>
 		<ul>Bids:
 		<li></li>
 		</ul>
@@ -74,6 +78,7 @@
   <script src="js/libs/ember-data.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/data-model.js"></script>
   <!-- to activate the test runner, add the "?test" query string parameter -->
   <script src="tests/runner.js"></script>
 </body>
