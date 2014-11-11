@@ -4,8 +4,11 @@ App.Auction = DS.Model.extend({
   name: DS.attr('string'),
   description: DS.attr('string'),
   price: DS.attr('integer'),
-  deadline_at: DS.attr('date'),
-  bids: DS.hasMany('bids', {async: true})
+  deadlineAt: DS.attr('date'),
+  bids: DS.hasMany('bids', {async: true})   /*,
+  remainingTime: function(auction) {
+      return (auction.deadlineAt - new Date);
+  }*/
 });
 
 App.Bid = DS.Model.extend({
@@ -19,20 +22,20 @@ App.Auction.FIXTURES = [{
     id: 1,
     name: 'Notebook HP 1234',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    deadline_at: new Date('2014-11-20'),
+    deadlineAt: new Date('2014-12-20'),
     price: 8000,
     bids: [1, 2]
   },{
     id: 2,
     name: 'Display Samsung 5678',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    deadline_at: new Date('2014-11-26'),
+    deadlineAt: new Date('2014-12-16'),
     price: 1200
   },{
     id: 3,
     name: 'Notebook Lenovo T61',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    deadline_at: new Date('2014-11-02'),
+    deadlineAt: new Date('2014-11-02'),
     price: 6000,
     bids: [3]
   }];

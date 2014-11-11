@@ -7,12 +7,25 @@ window.ca_config = {
 App = Ember.Application.create();
 
 App.Router.map(function() {
-
+  //index,
+  this.resource('archive', { path: '/archive'});
   this.resource('auction', { path: '/auction/:auction_id'});
   this.resource('auction_edit', { path: '/auction/:auction_id/edit'});
 });
 
 App.IndexRoute = Ember.Route.extend({
+  model: function() {
+      var auctions = this.store.find('auction');
+      return auctions;
+    return $.grep(auctions, function(auction, index) {
+        console.log(auction, auction.deadlineAt);
+      return true; //(auction.deadlineAt < new Date);
+    });
+    //return this.store.find('auction');
+  }
+});
+
+App.ArchiveRoute = Ember.Route.extend({
   model: function() {
     return this.store.find('auction');
   }
@@ -31,7 +44,6 @@ App.AuctionEditRoute = Ember.Route.extend({
 });
 
 Ember.Handlebars.helper('get-config', function(input) {
-  console.log(input);
   return eval('window.ca_config.' + input);
 });
 

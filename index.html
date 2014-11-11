@@ -21,7 +21,11 @@
 		        </div>
 		        <div id="navbar" class="navbar-collapse collapse">
 		          <ul class="nav navbar-nav">
-                            <li>{{#link-to 'index'}}Auctions{{/link-to}}</li>
+                            <li>{{#link-to 'index'}}Actual offer{{/link-to}}</li>
+                            <li>{{#link-to 'archive'}}Archive{{/link-to}}</li>
+		          </ul>
+                          <ul class="nav navbar-nav navbar-right">
+                            <li><a href="#"><i class="glyphicon glyphicon-user"></i> User1</a></li>
 		          </ul>
 		        </div><!--/.nav-collapse -->
 		      </div>
@@ -33,6 +37,24 @@
   </script>
 
   <script type="text/x-handlebars" id="index">
+	{{#each}}	
+	<div>
+	  <h3>{{#link-to 'auction' this}}{{remainingTime}}{{name}}{{/link-to}}</h3>
+	  <p>{{description}}</p>
+	  <p>
+            {{price}} {{get-config 'currency'}}
+            {{#each bid in bids}}
+                <span class="label label-primary">{{bid.username}}</span>
+            {{/each}}
+          </p>
+	</div>
+	{{/each}}
+        {{#unless model}}
+        No open auction.
+        {{/unless}}
+  </script>
+  
+  <script type="text/x-handlebars" id="archive">
 	{{#each}}	
 	<div>
 	  <h3>{{#link-to 'auction' this}}{{name}}{{/link-to}}</h3>
